@@ -9,7 +9,7 @@ from settings import Settings
 from archer import Archer
 
 class TargetPractice():
-    """Creates a blue background."""
+    """Overall class to manage the game assets and behavior."""
 
     def __init__(self):
         """Initialize the background and create the neccessary resources."""
@@ -35,6 +35,7 @@ class TargetPractice():
         while True:
             # Call the helper methods to help declutter the run_game method
             self._check_events()
+            self.archer.update()
             self._update_screen()
             # Sets the frame rate to be 60 fps.
             self.clock.tick(60)
@@ -43,9 +44,39 @@ class TargetPractice():
         """Respond to keypresses and mouse movements."""
         # Mouse and keyboard events are stored inside a queued list that can be
         # accessed in pygame.event 
+        # System quit is given highest priority.
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+            elif event.type == pygame.KEYUP:
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self, event):
+        """Helper method to check the pressing of keys."""
+        if event.key == pygame.K_q:
+            sys.exit()
+        elif event.key == pygame.K_RIGHT:
+            self.archer.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.archer.moving_left = True
+        elif event.key == pygame.K_DOWN:
+            self.archer.moving_down = True
+        elif event.key == pygame.K_UP:
+            self.archer.moving_up = True 
+         
+
+    def _check_keyup_events(self, event):
+        """Helper method to press the releasing of keys."""
+        if event.key == pygame.K_RIGHT:
+            self.archer.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.archer.moving_left = False
+        elif event.key == pygame.K_DOWN:
+            self.archer.moving_down = False
+        elif event.key == pygame.K_UP:
+            self.archer.moving_up = False        
 
     def _update_screen(self):
         """Helper method that redraws the screen"""
