@@ -13,11 +13,11 @@ class Settings:
         self.bg_color = (192, 192, 192)
 
         # Archer settings
-        self.archer_speed = 5
+        self.archer_speed = 3
 
         # Arrow settings
-        self.arrow_speed = 3.0
-        self.arrow_width = 3
-        self.arrow_length = 21
+        self.arrow_speed = 7.0
+        self.arrow_width = 2
+        self.arrow_length = 14
         self.arrow_color = (58, 6, 3)
         self.arrows_allowed = 5
