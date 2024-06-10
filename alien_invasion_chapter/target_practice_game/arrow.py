@@ -5,7 +5,7 @@
 import pygame
 from pygame.sprite import Sprite
 
-class Bullet(Sprite):
+class Arrow(Sprite):
     """A class to handle the arrows that are fired by the archer."""
 
     def __init__(self, tp_game):
