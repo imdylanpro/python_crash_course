@@ -17,9 +17,9 @@ class Arrow(Sprite):
         self.color = self.settings.arrow_color
 
         # Create an arrow at the origin (0,0) then set the correct location.
-        self.rect = pygame.rect(0,0, 
-                                self.settings.bullet_width, 
-                                self.settings.bullet_length)
+        self.rect = pygame.Rect(0,0, 
+                                self.settings.arrow_width, 
+                                self.settings.arrow_length)
         self.rect.midtop = tp_game.archer.rect.midtop
 
         # Store the bullets rect information as a float value
