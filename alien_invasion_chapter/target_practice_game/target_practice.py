@@ -7,6 +7,7 @@ import sys
 
 from settings import Settings
 from archer import Archer
+from arrow import Arrow
 
 class TargetPractice():
     """Overall class to manage the game assets and behavior."""
@@ -27,7 +28,10 @@ class TargetPractice():
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height)
         )
+        # Creates the archer model and allows for it to be used.
         self.archer = Archer(self)
+        # Create the arrows as a group.
+        self.arrows = pygame.sprite.Group()
 
     def run_game(self):
         """Creates the main loop for the game."""
@@ -36,6 +40,7 @@ class TargetPractice():
             # Call the helper methods to help declutter the run_game method
             self._check_events()
             self.archer.update()
+            self._update_arrows()
             self._update_screen()
             # Sets the frame rate to be 60 fps.
             self.clock.tick(60)
@@ -64,9 +69,10 @@ class TargetPractice():
         elif event.key == pygame.K_DOWN:
             self.archer.moving_down = True
         elif event.key == pygame.K_UP:
-            self.archer.moving_up = True 
+            self.archer.moving_up = True
+        elif event.key == pygame.K_SPACE:
+            self._fire_arrows() 
          
-
     def _check_keyup_events(self, event):
         """Helper method to press the releasing of keys."""
         if event.key == pygame.K_RIGHT:
@@ -78,9 +84,26 @@ class TargetPractice():
         elif event.key == pygame.K_UP:
             self.archer.moving_up = False        
 
+    def _fire_arrows(self):
+        """Create a new arrow and add it to the arrows group."""
+        if len(self.arrows) < self.settings.arrows_allowed:
+            new_arrow = Arrow(self)
+            self.arrows.add(new_arrow)
+
+    def _update_arrows(self):
+        """Check if the arrow is out of bounds and delete it if it is."""
+        self.arrows.update()
+        for arrow in self.arrows.copy():
+            if arrow.rect.bottom <= 0:
+                self.arrows.remove(arrow)
+
     def _update_screen(self):
         """Helper method that redraws the screen"""
+        # Set the background color for the screen
         self.screen.fill(self.settings.bg_color)
+        # draw each arrow that is in the arrows group
+        for arrow in self.arrows.sprites():
+            arrow.draw_arrow()
         # Call the blitme function from Archer class which draws the archer at 
         # his current location.
         self.archer.blitme()
