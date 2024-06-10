@@ -14,4 +14,10 @@ class Settings:
 
         # Archer settings
         self.archer_speed = 5
-        
+
+        # Arrow settings
+        self.arrow_speed = 3.0
+        self.arrow_width = 3
+        self.arrow_length = 21
+        self.arrow_color = (58, 6, 3)
+        self.arrows_allowed = 5
