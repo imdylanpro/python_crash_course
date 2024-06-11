@@ -38,12 +38,17 @@ class Archer():
         self.moving_down = False
 
     def update(self):
-        """Updates the archers movement based upon the movement flag."""
+        """Updates the archers movement and image used based upon the movement 
+        flag."""
         # Handles moving the character and ensures that they won't go beyond 
         # the limits of the screen.
         if self.moving_right and self.rect.right < self.screen_rect.right:
+            self.image = pygame.image.load(
+                'images/archer/archer_s2.bmp')
             self.x += self.settings.archer_speed
         if self.moving_left and self.rect.left > 0:
+            self.image = pygame.image.load(
+                'images/archer/archer_flipped_s2.bmp')
             self.x -= self.settings.archer_speed
         if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
             self.y += self.settings.archer_speed
@@ -53,6 +58,8 @@ class Archer():
         # Here the exact value for the horizontal speed is applied to the rect.
         self.rect.x = self.x
         self.rect.y = self.y
+
+    
 
     def blitme(self):
         """Draw the archer at its current location."""
