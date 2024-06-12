@@ -53,6 +53,9 @@ class Archer():
                 'images/archer/archer_flipped_s2.bmp')
             self.x -= self.settings.archer_speed
         if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
+            if self.image != 'images/archer/archer_facing_down_s2.bmp':
+                self.image = pygame.image.load(
+                'images/archer/archer_facing_down_s2.bmp')
             self.y += self.settings.archer_speed
         if self.moving_up and self.rect.top > 0:
             if self.image != 'images/archer/archer_facing_up_s2.bmp':
