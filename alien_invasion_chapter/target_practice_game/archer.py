@@ -31,11 +31,18 @@ class Archer():
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
 
-        # Create flags for monitoring the characters movement
+        # Create flags for monitoring the characters movement.
         self.moving_right = False
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
+
+        # Create flags to monitor which direction the character is facing.
+        # facing_right is True because that is the starting position.
+        self.facing_right = True
+        self.facing_left = False
+        self.facing_up = False
+        self.facing_down = False
 
     def update(self):
         """Updates the archers movement and image used based upon the movement 
@@ -43,29 +50,54 @@ class Archer():
         # Handles moving the character and ensures that they won't go beyond 
         # the limits of the screen.
         if self.moving_right and self.rect.right < self.screen_rect.right:
-            if self.image != 'images/archer/archer_s2.bmp':
+            if self.facing_right != True:
                 self.image = pygame.image.load(
                 'images/archer/archer_s2.bmp')
+                self._set_character_direction('right')
             self.x += self.settings.archer_speed
         if self.moving_left and self.rect.left > 0:
-            if self.image != 'images/archer/archer_flipped_s2.bmp':
+            if self.facing_left != True:
                 self.image = pygame.image.load(
                 'images/archer/archer_flipped_s2.bmp')
+                self._set_character_direction('left')
             self.x -= self.settings.archer_speed
         if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
-            if self.image != 'images/archer/archer_facing_down_s2.bmp':
+            if self.facing_down != True:
                 self.image = pygame.image.load(
                 'images/archer/archer_facing_down_s2.bmp')
+                self._set_character_direction('down')
             self.y += self.settings.archer_speed
         if self.moving_up and self.rect.top > 0:
-            if self.image != 'images/archer/archer_facing_up_s2.bmp':
+            if self.facing_up != True:
                 self.image = pygame.image.load(
                 'images/archer/archer_facing_up_s2.bmp')
+                self._set_character_direction('up')
             self.y -= self.settings.archer_speed
 
         # Here the exact value for the horizontal speed is applied to the rect.
         self.rect.x = self.x
         self.rect.y = self.y
+
+    def _set_character_direction(self, direction):
+        """Helper method to set the correct direction flag for the 
+        character."""
+        self.facing_right = False
+        self.facing_left = False
+        self.facing_down = False
+        self.facing_up = False
+
+        if direction == 'right':
+            self.facing_right = True
+            print('facing right')
+        elif direction == 'left':
+            self.facing_left = True
+            print('facing left')
+        elif direction == 'down':
+            self.facing_down = True
+            print('facing down')
+        elif direction == 'up':
+            self.facing_up = True
+            print('facing up')
 
     def blitme(self):
         """Draw the archer at its current location."""
