@@ -15,22 +15,38 @@ class Arrow(Sprite):
         self.screen = tp_game.screen
         self.settings = tp_game.settings
         self.color = self.settings.arrow_color
+        self.archer = tp_game.archer
 
         # Create an arrow at the origin (0,0) then set the correct location.
-        self.rect = pygame.Rect(0,0, 
-                                self.settings.arrow_width, 
-                                self.settings.arrow_length)
+        if self.archer.facing_up or self.archer.facing_down:
+            self.rect = pygame.Rect(0,0, 
+                                    self.settings.arrow_width, 
+                                    self.settings.arrow_length)
+        if self.archer.facing_left or self.archer.facing_right:
+            self.rect = pygame.Rect(0,0, 
+                                    self.settings.arrow_length,
+                                    self.settings.arrow_width)
         self.rect.midtop = tp_game.archer.rect.midtop
 
         # Store the bullets rect information as a float value
         self.y = float(self.rect.y)
+        self.x = float(self.rect.x)
 
     def update(self):
         """Move the arrow around the screen."""
         # Update the exact position of the arrow.
-        self.y -= self.settings.arrow_speed
+        if self.archer.facing_right:
+            self.x += self.settings.arrow_speed
+        elif self.archer.facing_right:
+            self.x -= self.settings.arrow_speed
+        elif self.archer.facing_down:
+            self.y += self.settings.arrow_speed
+        elif self.archer.facing_up:
+            self.y -= self.settings.arrow_speed
+        
         # Update the rect position based upon the float value
         self.rect.y = self.y
+        self.rect.x = self.x
 
     def draw_arrow(self):
         """Draw the arrow to the screen."""

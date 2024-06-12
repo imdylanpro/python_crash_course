@@ -94,7 +94,8 @@ class TargetPractice():
         """Check if the arrow is out of bounds and delete it if it is."""
         self.arrows.update()
         for arrow in self.arrows.copy():
-            if arrow.rect.bottom <= 0:
+            if (arrow.rect.bottom <= 0 
+                or arrow.rect.top > self.settings.screen_height):
                 self.arrows.remove(arrow)
 
     def _update_screen(self):
