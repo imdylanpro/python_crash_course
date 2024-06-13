@@ -22,11 +22,20 @@ class Arrow(Sprite):
             self.rect = pygame.Rect(0,0, 
                                     self.settings.arrow_width, 
                                     self.settings.arrow_length)
+            if self.archer.facing_up:
+                self.rect.midtop = tp_game.archer.rect.midtop
+            elif self.archer.facing_down:
+                self.rect.midtop = tp_game.archer.rect.midbottom
         elif self.archer.facing_left or self.archer.facing_right:
             self.rect = pygame.Rect(0,0, 
                                     self.settings.arrow_length,
                                     self.settings.arrow_width)
-        self.rect.midtop = tp_game.archer.rect.midtop
+            if self.archer.facing_right:
+                self.rect.midtop = tp_game.archer.rect.midright
+            elif self.archer.facing_left:
+                self.rect.midtop = tp_game.archer.rect.midleft
+        # self.rect.midtop = tp_game.archer.rect.midtop
+        # self.rect.midtop = tp_game.archer.rect.midright
 
         # Store the bullets rect information as a float value
         self.y = float(self.rect.y)

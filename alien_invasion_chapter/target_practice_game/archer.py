@@ -20,7 +20,8 @@ class Archer():
         self.screen_rect = tp_game.screen.get_rect()
 
         # Load the archer image and get its rect.
-        self.image = pygame.image.load('images/archer/archer_s2.bmp')
+        self.image = pygame.image.load(
+            'images/archer/archer_facing_right_s2.bmp')
         self.rect = self.image.get_rect()
 
         # Start the archer in the bottom center of the screen.
@@ -52,13 +53,13 @@ class Archer():
         if self.moving_right and self.rect.right < self.screen_rect.right:
             if self.facing_right != True:
                 self.image = pygame.image.load(
-                'images/archer/archer_s2.bmp')
+                'images/archer/archer_facing_right_s2.bmp')
                 self._set_character_direction('right')
             self.x += self.settings.archer_speed
         if self.moving_left and self.rect.left > 0:
             if self.facing_left != True:
                 self.image = pygame.image.load(
-                'images/archer/archer_flipped_s2.bmp')
+                'images/archer/archer_facing_left_s2.bmp')
                 self._set_character_direction('left')
             self.x -= self.settings.archer_speed
         if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
