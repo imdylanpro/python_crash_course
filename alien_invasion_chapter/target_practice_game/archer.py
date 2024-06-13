@@ -34,15 +34,15 @@ class Archer():
         # Create flags for monitoring the characters movement.
         self.moving_right = False
         self.moving_left = False
-        self.moving_up = False
         self.moving_down = False
+        self.moving_up = False
 
         # Create flags to monitor which direction the character is facing.
         # facing_right is True because that is the starting position.
         self.facing_right = True
         self.facing_left = False
-        self.facing_up = False
         self.facing_down = False
+        self.facing_up = False
 
     def update(self):
         """Updates the archers movement and image used based upon the movement 

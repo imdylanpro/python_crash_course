@@ -20,4 +20,4 @@ class Settings:
         self.arrow_width = 2
         self.arrow_length = 14
         self.arrow_color = (58, 6, 3)
-        self.arrows_allowed = 5
+        self.arrows_allowed = 10

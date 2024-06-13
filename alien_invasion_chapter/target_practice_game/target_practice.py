@@ -30,6 +30,8 @@ class TargetPractice():
         )
         # Creates the archer model and allows for it to be used.
         self.archer = Archer(self)
+        # Imports the attributes for the arrows.
+        self.arrow = Arrow(self)
         # Create the arrows as a group.
         self.arrows = pygame.sprite.Group()
 
@@ -91,12 +93,16 @@ class TargetPractice():
             self.arrows.add(new_arrow)
 
     def _update_arrows(self):
-        """Check if the arrow is out of bounds and delete it if it is."""
+        """Updates the position of the arrows and deletes them if they are out 
+        of bounds."""
         self.arrows.update()
         for arrow in self.arrows.copy():
             if (arrow.rect.bottom <= 0 
-                or arrow.rect.top > self.settings.screen_height):
+                or arrow.rect.top > self.settings.screen_height
+                or arrow.rect.left > self.settings.screen_width
+                or arrow.rect.right <= 0):
                 self.arrows.remove(arrow)
+            # print(len(self.arrows))
 
     def _update_screen(self):
         """Helper method that redraws the screen"""

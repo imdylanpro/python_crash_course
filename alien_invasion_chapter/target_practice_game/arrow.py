@@ -22,7 +22,7 @@ class Arrow(Sprite):
             self.rect = pygame.Rect(0,0, 
                                     self.settings.arrow_width, 
                                     self.settings.arrow_length)
-        if self.archer.facing_left or self.archer.facing_right:
+        elif self.archer.facing_left or self.archer.facing_right:
             self.rect = pygame.Rect(0,0, 
                                     self.settings.arrow_length,
                                     self.settings.arrow_width)
@@ -32,16 +32,33 @@ class Arrow(Sprite):
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
 
+        # Set the direction for the arrow so that it can be modified later
+        self.firing_right = False
+        self.firing_left = False
+        self.firing_down = False
+        self.firing_up = False
+
+        # Gets the direction the archer is facing, and uses that to determine 
+        # the direction the arrow should travel.
+        if self.archer.facing_right:
+            self.firing_right = True
+        elif self.archer.facing_left:
+            self.firing_left = True
+        elif self.archer.facing_down:
+            self.firing_down = True
+        elif self.archer.facing_up:
+            self.firing_up = True
+
     def update(self):
         """Move the arrow around the screen."""
         # Update the exact position of the arrow.
-        if self.archer.facing_right:
+        if self.firing_right:
             self.x += self.settings.arrow_speed
-        elif self.archer.facing_right:
+        elif self.firing_left:
             self.x -= self.settings.arrow_speed
-        elif self.archer.facing_down:
+        elif self.firing_down:
             self.y += self.settings.arrow_speed
-        elif self.archer.facing_up:
+        elif self.firing_up:
             self.y -= self.settings.arrow_speed
         
         # Update the rect position based upon the float value
