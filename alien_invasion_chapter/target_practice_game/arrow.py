@@ -34,8 +34,6 @@ class Arrow(Sprite):
                 self.rect.midtop = tp_game.archer.rect.midright
             elif self.archer.facing_left:
                 self.rect.midtop = tp_game.archer.rect.midleft
-        # self.rect.midtop = tp_game.archer.rect.midtop
-        # self.rect.midtop = tp_game.archer.rect.midright
 
         # Store the bullets rect information as a float value
         self.y = float(self.rect.y)

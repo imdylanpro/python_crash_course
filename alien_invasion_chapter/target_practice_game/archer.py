@@ -23,6 +23,7 @@ class Archer():
         self.image = pygame.image.load(
             'images/archer/archer_facing_right_s2.bmp')
         self.rect = self.image.get_rect()
+        
 
         # Start the archer in the bottom center of the screen.
         self.rect.midbottom = self.screen_rect.midbottom
@@ -48,32 +49,34 @@ class Archer():
     def update(self):
         """Updates the archers movement and image used based upon the movement 
         flag."""
+
+        direction_change = False
         # Handles moving the character and ensures that they won't go beyond 
         # the limits of the screen.
         if self.moving_right and self.rect.right < self.screen_rect.right:
             if self.facing_right != True:
-                self.image = pygame.image.load(
-                'images/archer/archer_facing_right_s2.bmp')
-                self._set_character_direction('right')
+                direction_change = True
+                direction = 'right'
             self.x += self.settings.archer_speed
         if self.moving_left and self.rect.left > 0:
-            if self.facing_left != True:
-                self.image = pygame.image.load(
-                'images/archer/archer_facing_left_s2.bmp')
-                self._set_character_direction('left')
+            if self.facing_left != True or direction_change == True:
+                direction_change = True
+                direction = 'left'
             self.x -= self.settings.archer_speed
         if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
-            if self.facing_down != True:
-                self.image = pygame.image.load(
-                'images/archer/archer_facing_down_s2.bmp')
-                self._set_character_direction('down')
+            if self.facing_down != True or direction_change == True:
+                direction_change = True
+                direction = 'down'
             self.y += self.settings.archer_speed
         if self.moving_up and self.rect.top > 0:
-            if self.facing_up != True:
-                self.image = pygame.image.load(
-                'images/archer/archer_facing_up_s2.bmp')
-                self._set_character_direction('up')
+            if self.facing_up != True or direction_change == True:
+                direction_change = True
+                direction = 'up'
             self.y -= self.settings.archer_speed
+
+        if direction_change == True:
+            self._set_character_direction(direction)
+            direction_change = False
 
         # Here the exact value for the horizontal speed is applied to the rect.
         self.rect.x = self.x
@@ -82,6 +85,7 @@ class Archer():
     def _set_character_direction(self, direction):
         """Helper method to set the correct direction flag for the 
         character."""
+
         self.facing_right = False
         self.facing_left = False
         self.facing_down = False
@@ -89,16 +93,25 @@ class Archer():
 
         if direction == 'right':
             self.facing_right = True
-            print('facing right')
-        elif direction == 'left':
+            image = 'images/archer/archer_facing_right_s2.bmp'
+            print(f'facing {direction}')
+        if direction == 'left':
             self.facing_left = True
-            print('facing left')
-        elif direction == 'down':
+            image = 'images/archer/archer_facing_left_s2.bmp'
+            print(f'facing {direction}')
+        if direction == 'down':
             self.facing_down = True
-            print('facing down')
-        elif direction == 'up':
+            image = 'images/archer/archer_facing_down_s2.bmp'
+            print(f'facing {direction}')
+        if direction == 'up':
             self.facing_up = True
-            print('facing up')
+            image = 'images/archer/archer_facing_up_s2.bmp'
+            print(f'facing {direction}')
+
+        # Set the new image for the player character.
+        self.image = pygame.image.load(image)
+        # Set the new rect hitbox for the player character.
+        self.rect = self.image.get_rect()
 
     def blitme(self):
         """Draw the archer at its current location."""
