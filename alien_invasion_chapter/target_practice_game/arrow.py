@@ -10,7 +10,8 @@ class Arrow(Sprite):
 
     def __init__(self, tp_game):
         """Create the arrow objects at the archers current location."""
-        # Inheret the properties that are already present in the Sprite super class.
+        # Inheret the properties that are already present in the Sprite super 
+        # class.
         super().__init__()
         self.screen = tp_game.screen
         self.settings = tp_game.settings
