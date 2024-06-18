@@ -25,7 +25,7 @@ class AlienInvasion():
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
 
-        self.create_fleet()
+        self._create_fleet()
 
     def run_game(self):
         '''Start the main loop for the game.'''
@@ -38,7 +38,7 @@ class AlienInvasion():
             # Set the frame rate to 60.
             self.clock.tick(60)
 
-    def create_fleet(self):
+    def _create_fleet(self):
         """Create the fleet of aliens."""
         # Make an alien and continue making aliens until there is no room left.
         # The space between aliens is equivalent to one alien width and one alien height.
@@ -112,7 +112,6 @@ class AlienInvasion():
             # Stop movement of the ship when keyleft is released.
             self.ship.moving_left = False 
         
-
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
         if len(self.bullets) < self.settings.bullets_allowed:
@@ -126,18 +125,31 @@ class AlienInvasion():
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+        self._check_bullet_alien_collisions()
 
+    def _check_bullet_alien_collisions(self):
+        """Respond to bullet-alien collisions."""
         # Check for any bullets that have hit aliens.
         #   If so, get rid of the bullet and the alien.
         # The True, True boolean results determine which are deleted.
         collisions = pygame.sprite.groupcollide(
             self.bullets, self.aliens, True, True
         )
+        if not self.aliens:
+            #Destroy existing bullets and create new fleet.
+            self.bullets.empty()
+            self._create_fleet()
 
     def _update_aliens(self):
         """Check if the fleet is at an edge, then update positions."""
         self._check_fleet_edges()
         self.aliens.update()
+
+        # Look for alien-ship collisions.
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            print("Ship hit!")
+            # Changes the image for the ship into an explosion when hit.
+            self.ship.image = pygame.image.load('images/explosion.bmp')
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
