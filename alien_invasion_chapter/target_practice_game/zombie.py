@@ -32,11 +32,15 @@ class Zombie(Sprite):
     def update(self):
         """Move the zombie toward the archer's location."""
         if self.x > self.archer.x:
-            self.x - self.settings.zombie_speed
+            self.x -= self.settings.zombie_speed
         elif self.x < self.archer.x:
-            self.x + self.settings.zombie_speed
+            self.x += self.settings.zombie_speed
         if self.y > self.archer.y:
-            self.y - self.settings.zombie_speed
+            self.y -= self.settings.zombie_speed
         elif self.y < self.archer.y:
-            self.y + self.settings.zombie_speed
+            self.y += self.settings.zombie_speed
+
+        # Update the value for the rect.
+        self.rect.x = self.x
+        self.rect.y = self.y
         

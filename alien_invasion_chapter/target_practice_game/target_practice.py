@@ -48,6 +48,7 @@ class TargetPractice():
             self._check_events()
             self.archer.update()
             self._update_arrows()
+            self._update_zombies()
             self._update_screen()
             # Sets the frame rate to be 60 fps.
             self.clock.tick(60)
@@ -58,6 +59,17 @@ class TargetPractice():
         new_zombie = Zombie(self)
         zombie_width, zombie_height = new_zombie.rect.size
         self.zombies.add(new_zombie)
+
+    def _update_zombies(self):
+        """Update the position of the zombies."""
+        self.zombies.update()
+
+        #Look for zombie-archer collisions.
+        if pygame.sprite.spritecollideany(self.archer, self.zombies):
+            print('Archer hit!')
+            # Change the image of the archer to a tombston to show he is dead.
+            self.archer.image = pygame.image.load(
+                'images/tombstone/tombstone_s2.bmp')
 
     def _check_events(self):
         """Respond to keypresses and mouse movements."""
@@ -126,6 +138,8 @@ class TargetPractice():
         # Call the blitme function from Archer class which draws the archer at 
         # his current location.
         self.archer.blitme()
+        # Draw the zombie to the screen
+        self.zombies.draw(self.screen)
         # pygame.display.flip essentially refreshes the display. It draws 
         # in anything that was created on the last frame into the new 
         # frame. It does this by "flipping" the back buffer to the front.
