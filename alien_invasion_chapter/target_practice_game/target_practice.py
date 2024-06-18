@@ -8,6 +8,7 @@ import sys
 from settings import Settings
 from archer import Archer
 from arrow import Arrow
+from zombie import Zombie
 
 class TargetPractice():
     """Overall class to manage the game assets and behavior."""
@@ -34,6 +35,10 @@ class TargetPractice():
         self.arrow = Arrow(self)
         # Create the arrows as a group.
         self.arrows = pygame.sprite.Group()
+        # Create the zombies as a group.
+        self.zombies = pygame.sprite.Group()
+
+        self._create_zombie()
 
     def run_game(self):
         """Creates the main loop for the game."""
@@ -46,6 +51,13 @@ class TargetPractice():
             self._update_screen()
             # Sets the frame rate to be 60 fps.
             self.clock.tick(60)
+
+    def _create_zombie(self):
+        """Create a zombie."""
+
+        new_zombie = Zombie(self)
+        zombie_width, zombie_height = new_zombie.rect.size
+        self.zombies.add(new_zombie)
 
     def _check_events(self):
         """Respond to keypresses and mouse movements."""
