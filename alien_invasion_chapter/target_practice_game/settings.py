@@ -21,3 +21,6 @@ class Settings:
         self.arrow_length = 14
         self.arrow_color = (58, 6, 3)
         self.arrows_allowed = 10
+
+        # Zombie settings
+        self.zombie_speed = 2

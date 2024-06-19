@@ -47,7 +47,8 @@ class AlienInvasion():
     def _create_fleet(self):
         """Create the fleet of aliens."""
         # Make an alien and continue making aliens until there is no room left.
-        # The space between aliens is equivalent to one alien width and one alien height.
+        # The space between aliens is equivalent to one alien width and one 
+        # alien height.
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
 
