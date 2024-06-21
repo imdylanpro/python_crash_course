@@ -24,7 +24,6 @@ class Archer():
             'images/archer/archer_facing_right_s2.bmp')
         self.rect = self.image.get_rect()
         
-
         # Start the archer in the bottom center of the screen.
         self.rect.midbottom = self.screen_rect.midbottom
 
