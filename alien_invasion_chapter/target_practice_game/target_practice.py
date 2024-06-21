@@ -39,6 +39,7 @@ class TargetPractice():
         self.zombies = pygame.sprite.Group()
 
         self._create_zombie()
+        # self._create_horde()
 
     def run_game(self):
         """Creates the main loop for the game."""
@@ -55,21 +56,38 @@ class TargetPractice():
 
     def _create_zombie(self):
         """Create a zombie."""
-
         new_zombie = Zombie(self)
-        zombie_width, zombie_height = new_zombie.rect.size
         self.zombies.add(new_zombie)
 
+    def _create_horde(self):
+        """Create a horde of zombies."""
+        # spawn_locations = {
+        #     'x':[0, self.settings.screen_width],
+        #     'y':[0, self.settings.screen_height],
+        #     }
+        
+        # for  v in spawn_locations:
+        #     for s in v:
+        #         self._create_zombie(s)
+
     def _update_zombies(self):
-        """Update the position of the zombies."""
+        """Update the position of the zombies.
+        \nUpdates Zombies.
+        \nDetects collision with archer."""
         self.zombies.update()
 
         #Look for zombie-archer collisions.
         if pygame.sprite.spritecollideany(self.archer, self.zombies):
+            self._end_game()
             print('Archer hit!')
+            self.zombies.empty()
             # Change the image of the archer to a tombston to show he is dead.
             self.archer.image = pygame.image.load(
                 'images/tombstone/tombstone_s2.bmp')
+
+    def _end_game(self):
+        """End the game and handle all parameters associated with the end of 
+        the game."""
 
     def _check_events(self):
         """Respond to keypresses and mouse movements."""
@@ -127,6 +145,22 @@ class TargetPractice():
                 or arrow.rect.right <= 0):
                 self.arrows.remove(arrow)
             # print(len(self.arrows))
+        self._check_arrow_zombie_collisions()
+
+    def _check_arrow_zombie_collisions(self):
+        """Respond to any arrow-zombie collisions."""
+        # Check if any arrows have hit any zombie.
+        #   If so remove the arrow and the zombie.
+        # The True boolean determines which sprites are deleted.
+        collisions = pygame.sprite.groupcollide(
+            self.arrows, self.zombies, True, True
+        )
+
+        # Spawn another zombie when all zombies on screen are deleted.
+        if not self.zombies:
+            # Removes all arrows
+            self.arrows.empty()
+            self._create_zombie()
 
     def _update_screen(self):
         """Helper method that redraws the screen"""
